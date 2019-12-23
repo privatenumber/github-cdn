@@ -1,0 +1,24 @@
+{
+  "name": "github-cdn",
+  "version": "1.0.0",
+  "description": "Github CDN Server",
+  "author": "Hiroki Osame <hiroki.osame@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "gh-got": "^8.1.0",
+    "got": "^10.1.0",
+    "isomorphic-git": "^0.72.0",
+    "keyv": "^4.0.0",
+    "keyv-memcache": "^0.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
