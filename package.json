@@ -7,10 +7,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r esm .",
-    "dev": "nodemon -r esm .",
+    "dev": "DEBUG=github-cdn nodemon -r esm .",
     "lint": "eslint ."
   },
   "dependencies": {
+    "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
