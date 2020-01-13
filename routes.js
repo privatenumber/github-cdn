@@ -1,63 +1,72 @@
 const express = require('express');
 const cache = require('./utils/cache');
 const github = require('./utils/github');
+const badgen = require('./utils/badgen');
+
+const semver = require('semver');
 
 const cacheDuration = 10000;
 
 const router = express.Router();
 
-router.get('/:owner/:repo', async (req, res) => {
-	const { owner, repo } = req.params;
-	const key = `refs:${owner}-${repo}`;
-
-	let refs = await cache.get(key);
-	const cacheHit = !!refs;
-
-	if (!cacheHit) {
-		const remoteInfo = await github.getRemoteInfo({ owner, repo });
-		refs = remoteInfo.refs;
-		cache.set(key, refs, cacheDuration);
-	}
-
-	res
-		.header('GIT-CDN-CACHE', cacheHit)
-		.json(refs);
-});
+router.get('/:owner/:repo', require('./routes/getRepo'));
 
 router.get('/:owner/:repo/:ref:path(/*)?', async (req, res) => {
-	const { owner, repo, ref, path = '/' } = req.params;
-	const key = `contents:${owner}-${repo}-${ref}-${path}`;
+	let { owner, repo, ref, path = '/' } = req.params;
 
-	let data = await cache.get(key);
-	const cacheHit = !!data;
-	if (!cacheHit) {
-		const gitRes = await github.getFile({ owner, repo, ref, path });
+	// Resolve semver range
+	if (ref === 'latest') { ref = '*'; }
 
-		if (gitRes.err) {
+	if (semver.validRange(ref)) {
+		const { data: refs, err } = await github.getRemoteInfo({ owner, repo });
+
+		if (err) {
 			return res
-				.status(500)
-				.json({ message: gitRes.err.message });
-		}
-
-		if (gitRes.statusCode !== 200) {
-			return res
-				.status(gitRes.statusCode)
+				.status(err.statusCode || 500)
 				.json({
-					message: gitRes.body.message,
+					message: err.message,
 					request: { owner, repo, ref, path },
 				});
 		}
-		data = gitRes.body;
-		cache.set(key, data, cacheDuration);
+
+		const versions = Object.keys(refs.tags)
+			.filter(t => !t.endsWith('^{}'))
+			.filter(semver.valid);
+
+		const matchesVersion = semver.maxSatisfying(versions, ref);
+
+		if (matchesVersion !== ref) {
+			return res.redirect(`/${owner}/${repo}/${matchesVersion}${path}${req._parsedUrl.search || ''}`);
+		}
 	}
 
-	res.header('GIT-CDN-CACHE', cacheHit);
-
-	if (Array.isArray(data)) {
-		return res.json(data.map(({ name, path, type }) => ({ name, path, type })));
+	// Serve badge
+	if (req.query.hasOwnProperty('badge')) {
+		badgen({ name: repo, version: ref })
+			.on('error', (err) => res.json({ error: 'Could not generate badge: ' + err.message }))
+			.pipe(res);
+		return;
 	}
 
-	const content = Buffer.from(data.content, 'base64').toString();
+	// Get file
+	const { err, source, data: file } = await github.getFile({ owner, repo, ref, path });
+
+	if (err) {
+		return res
+			.status(err.statusCode || 500)
+			.json({
+				message: err.message,
+				request: { owner, repo, ref, path },
+			});
+	}
+
+	res.header('GIT-CDN-SOURCE', source);
+
+	if (Array.isArray(file)) {
+		return res.json(file.map(({ name, path, type }) => ({ name, path, type })));
+	}
+
+	const content = Buffer.from(file.content, 'base64').toString();
 	res.end(content);
 });
 
