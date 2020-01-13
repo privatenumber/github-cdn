@@ -1,8 +1,8 @@
-const github = require('../utils/github');
+import { getRemoteInfo } from '../utils/github';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
 	const { owner, repo } = req.params;
-	const { source, data: remoteInfo } = await github.getRemoteInfo({ owner, repo });
+	const { source, data: remoteInfo } = await getRemoteInfo({ owner, repo });
 
 	res
 		.header('GIT-CDN-SOURCE', source)

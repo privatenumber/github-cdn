@@ -6,12 +6,13 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "dev": "nodemon .",
+    "start": "node -r esm .",
+    "dev": "nodemon -r esm .",
     "lint": "eslint ."
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "gh-got": "^8.1.0",
     "got": "^10.1.0",

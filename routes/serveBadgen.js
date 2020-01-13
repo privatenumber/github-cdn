@@ -1,9 +1,9 @@
-const got = require('got');
-const { has } = require('lodash');
+import got from 'got';
+import { has } from 'lodash';
 
 const badgen = ({ name, version, color = 'blue' }) => got.stream(`https://badgen.net/badge/${name}/${version}/${color}`);
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
 	const { repo, ref } = req.params;
 
 	if (!has(req.query, 'badge')) {

@@ -1,12 +1,12 @@
-const { pick } = require('lodash');
-const github = require('../utils/github');
+import { pick } from 'lodash';
+import { getPath } from '../utils/github';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
 	const {
 		owner, repo, ref, path = '/',
 	} = req.params;
 
-	const { err, source, data: pathData } = await github.getPath({
+	const { err, source, data: pathData } = await getPath({
 		owner, repo, ref, path,
 	});
 

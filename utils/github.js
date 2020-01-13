@@ -1,8 +1,8 @@
-const got = require('got');
-const qs = require('querystring');
-const git = require('isomorphic-git');
-const assert = require('assert');
-const cacheFallback = require('./cacheFallback');
+import qs from 'querystring';
+import assert from 'assert';
+import got from 'got';
+import { getRemoteInfo as igGetRemoteInfo } from 'isomorphic-git';
+import cacheFallback from './cacheFallback';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -23,37 +23,36 @@ const gitApi = got.extend({
 
 const cacheDuration = 10000;
 
-module.exports = {
-	getRemoteInfo({ owner, repo }) {
-		return cacheFallback({
-			cacheDuration,
-			key: `refs:${owner}-${repo}`,
-			request: async () => {
-				const remoteInfo = await git.getRemoteInfo({
-					url: `${GITHUB_HOST}/${owner}/${repo}`,
-					token: GITHUB_TOKEN,
-				});
-				return remoteInfo.refs;
-			},
-		});
-	},
-	getPath({
-		owner, repo, ref, path = '/',
-	}) {
-		return cacheFallback({
-			cacheDuration,
-			key: `contents:${owner}-${repo}-${ref}-${path}`,
-			request: async () => {
-				const res = await gitApi(`repos/${owner}/${repo}/contents${path}?${qs.stringify({ ref })}`);
+export function getRemoteInfo({ owner, repo }) {
+	return cacheFallback({
+		cacheDuration,
+		key: `refs:${owner}-${repo}`,
+		request: async () => {
+			const remoteInfo = await igGetRemoteInfo({
+				url: `${GITHUB_HOST}/${owner}/${repo}`,
+				token: GITHUB_TOKEN,
+			});
+			return remoteInfo.refs;
+		},
+	});
+}
 
-				if (res.statusCode !== 200) {
-					const err = new Error(res.body.message);
-					err.statusCode = res.statusCode;
-					throw err;
-				}
+export function getPath({
+	owner, repo, ref, path = '/',
+}) {
+	return cacheFallback({
+		cacheDuration,
+		key: `contents:${owner}-${repo}-${ref}-${path}`,
+		request: async () => {
+			const res = await gitApi(`repos/${owner}/${repo}/contents${path}?${qs.stringify({ ref })}`);
 
-				return res.body;
-			},
-		});
-	},
-};
+			if (res.statusCode !== 200) {
+				const err = new Error(res.body.message);
+				err.statusCode = res.statusCode;
+				throw err;
+			}
+
+			return res.body;
+		},
+	});
+}
