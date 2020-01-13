@@ -1,4 +1,4 @@
-const cache = require('./cache');
+import cache from './cache';
 
 async function cacheFallback({
 	cacheDuration,
@@ -52,4 +52,4 @@ async function cacheFallback({
 	return result;
 }
 
-module.exports = cacheFallback;
+export default cacheFallback;

@@ -1,7 +1,7 @@
-const semver = require('semver');
-const github = require('../utils/github');
+import semver from 'semver';
+import { getRemoteInfo } from '../utils/github';
 
-module.exports = async (req, res, next) => {
+export default async (req, res, next) => {
 	const { owner, repo, path = '/' } = req.params;
 	let { ref } = req.params;
 
@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
 	if (ref === 'latest') { ref = '*'; }
 
 	if (semver.validRange(ref)) {
-		const { data: refs, err } = await github.getRemoteInfo({ owner, repo });
+		const { data: refs, err } = await getRemoteInfo({ owner, repo });
 
 		if (err) {
 			return res

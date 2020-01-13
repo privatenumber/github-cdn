@@ -1,7 +1,7 @@
-require('dotenv').config();
-const express = require('express');
-const assert = require('assert');
-const routes = require('./routes');
+import 'dotenv/config';
+import express from 'express';
+import assert from 'assert';
+import routes from './routes';
 
 const { PORT } = process.env;
 assert(PORT, 'process.env.PORT not defined');
