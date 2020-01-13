@@ -1,8 +1,8 @@
 import express from 'express';
-import getRepo from './routes/getRepo';
-import resolveSemver from './routes/resolveSemver';
-import serveBadgen from './routes/serveBadgen';
-import getPath from './routes/getPath';
+import getRepo from './getRepo';
+import resolveSemver from './resolveSemver';
+import serveBadgen from './serveBadgen';
+import getPath from './getPath';
 
 const router = express.Router();
 
