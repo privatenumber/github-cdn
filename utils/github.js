@@ -4,8 +4,6 @@ const git = require('isomorphic-git');
 const assert = require('assert');
 const cacheFallback = require('./cacheFallback');
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const { GITHUB_HOST, GITHUB_TOKEN } = process.env;
@@ -39,7 +37,9 @@ module.exports = {
 			},
 		});
 	},
-	getPath({ owner, repo, ref, path = '/' }) {
+	getPath({
+		owner, repo, ref, path = '/',
+	}) {
 		return cacheFallback({
 			cacheDuration,
 			key: `contents:${owner}-${repo}-${ref}-${path}`,

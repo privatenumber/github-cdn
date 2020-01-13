@@ -2,7 +2,8 @@ const semver = require('semver');
 const github = require('../utils/github');
 
 module.exports = async (req, res, next) => {
-	let { owner, repo, ref, path = '/' } = req.params;
+	const { owner, repo, path = '/' } = req.params;
+	let { ref } = req.params;
 
 	// Resolve semver range
 	if (ref === 'latest') { ref = '*'; }
@@ -15,12 +16,14 @@ module.exports = async (req, res, next) => {
 				.status(err.statusCode || 500)
 				.json({
 					message: err.message,
-					request: { owner, repo, ref, path },
+					request: {
+						owner, repo, ref, path,
+					},
 				});
 		}
 
 		const versions = Object.keys(refs.tags)
-			.filter(t => !t.endsWith('^{}'))
+			.filter((t) => !t.endsWith('^{}'))
 			.filter(semver.valid);
 
 		const matchesVersion = semver.maxSatisfying(versions, ref);
@@ -30,5 +33,5 @@ module.exports = async (req, res, next) => {
 		}
 	}
 
-	next();
+	return next();
 };
