@@ -8,7 +8,7 @@ router.get(
 	'/:owner/:repo/:ref:path(/*)?',
 	require('./routes/resolveSemver'),
 	require('./routes/serveBadgen'),
-	require('./routes/getPath')
+	require('./routes/getPath'),
 );
 
 module.exports = router;

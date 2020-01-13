@@ -37,7 +37,7 @@ async function cacheFallback({
 			cache.set(key, {
 				data,
 				created: Date.now(),
-			});			
+			});
 		} catch (err) {
 			result.err = err;
 			if (fallback) {
