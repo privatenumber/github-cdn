@@ -1,7 +1,4 @@
 const github = require('../utils/github');
-const cache = require('../utils/cache');
-
-const cacheDuration = 10000;
 
 module.exports = async (req, res) => {
 	const { owner, repo } = req.params;
