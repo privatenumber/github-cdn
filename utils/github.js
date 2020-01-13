@@ -2,7 +2,7 @@ const got = require('got');
 const qs = require('querystring');
 const git = require('isomorphic-git');
 const assert = require('assert');
-const cache = require('./cache');
+const cacheFallback = require('./cacheFallback');
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -25,58 +25,10 @@ const gitApi = got.extend({
 
 const cacheDuration = 10000;
 
-async function cacheFallback({ key, request }) {
-	const result = {
-		source: null,
-		data: null,
-	};
-
-	let fallback = null;
-	let cacheHit = await cache.get(key);
-
-	if (cacheHit) {
-		const cacheElapsed = Date.now() - cacheHit.created;
-		if (cacheElapsed > cacheDuration) {
-			fallback = cacheHit;
-			cacheHit = undefined;
-		} else {
-			Object.assign(result, {
-				source: 'cache',
-				data: cacheHit.data,
-			});
-		}
-	}
-
-	if (!cacheHit) {
-		try {
-			const data = await request();
-			Object.assign(result, {
-				source: 'request',
-				data,
-			});
-
-			cache.set(key, {
-				data,
-				created: Date.now(),
-			});			
-		} catch (err) {
-			result.err = err;
-			if (fallback) {
-				Object.assign(result, {
-					source: `fallback ${fallback.created}`,
-					data: fallback.data,
-				});
-			}
-		}
-	}
-
-	return result;
-}
-
-
 module.exports = {
 	getRemoteInfo({ owner, repo }) {
 		return cacheFallback({
+			cacheDuration,
 			key: `refs:${owner}-${repo}`,
 			request: async () => {
 				const remoteInfo = await git.getRemoteInfo({
@@ -87,9 +39,9 @@ module.exports = {
 			},
 		});
 	},
-
-	getFile({ owner, repo, ref, path = '/' }) {
+	getPath({ owner, repo, ref, path = '/' }) {
 		return cacheFallback({
+			cacheDuration,
 			key: `contents:${owner}-${repo}-${ref}-${path}`,
 			request: async () => {
 				const res = await gitApi(`repos/${owner}/${repo}/contents${path}?${qs.stringify({ ref })}`);
