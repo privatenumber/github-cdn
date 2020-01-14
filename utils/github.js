@@ -13,7 +13,7 @@ assert(GITHUB_HOST, 'process.env.GITHUB_HOST is not defined');
 assert(GITHUB_TOKEN, 'process.env.GITHUB_TOKEN is not defined');
 
 if (!/^https?:\/\//.test(GITHUB_HOST)) {
-	GITHUB_HOST = 'https://' + GITHUB_HOST;
+	GITHUB_HOST = `https://${GITHUB_HOST}`;
 }
 
 const gitApi = got.extend({
