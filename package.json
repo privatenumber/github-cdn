@@ -4,10 +4,10 @@
   "description": "Github CDN Server",
   "author": "Hiroki Osame <hiroki.osame@gmail.com>",
   "license": "MIT",
-  "main": "index.js",
+  "main": "routes/index.js",
   "scripts": {
-    "start": "node -r esm .",
-    "dev": "DEBUG=github-cdn nodemon -r esm .",
+    "start": "node -r esm server",
+    "dev": "DEBUG=github-cdn nodemon -r esm server",
     "lint": "eslint ."
   },
   "dependencies": {
