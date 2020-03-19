@@ -43,13 +43,19 @@ export function getRemoteInfo({ owner, repo }) {
 }
 
 export function getPath({
-	owner, repo, ref, path = '/',
+	owner, repo, ref, path = '',
 }) {
+	let cleanPath = path;
+
+	if (cleanPath.endsWith('/')) {
+		cleanPath = cleanPath.slice(0, -1);
+	}
+
 	return cacheFallback({
 		cacheDuration,
-		key: `contents:${owner}-${repo}-${ref}-${path}`,
+		key: `contents:${owner}-${repo}-${ref}-${cleanPath}`,
 		request: async () => {
-			const res = await gitApi(`repos/${owner}/${repo}/contents${path}?${qs.stringify({ ref })}`);
+			const res = await gitApi(`repos/${owner}/${repo}/contents/${cleanPath}?${qs.stringify({ ref })}`);
 
 			if (res.statusCode !== 200) {
 				const err = new Error(res.body.message);
