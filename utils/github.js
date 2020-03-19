@@ -2,6 +2,7 @@ import qs from 'querystring';
 import assert from 'assert';
 import got from 'got';
 import { getRemoteInfo as igGetRemoteInfo } from 'isomorphic-git';
+import http from 'isomorphic-git/http/node';
 import cacheFallback from './cacheFallback';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -28,14 +29,19 @@ const gitApi = got.extend({
 
 const cacheDuration = 10000;
 
+const auth = {
+	username: GITHUB_TOKEN,
+	password: 'x-oauth-basic',
+};
 export function getRemoteInfo({ owner, repo }) {
 	return cacheFallback({
 		cacheDuration,
 		key: `refs:${owner}-${repo}`,
 		request: async () => {
 			const remoteInfo = await igGetRemoteInfo({
-				url: `${GITHUB_HOST}/${owner}/${repo}`,
-				token: GITHUB_TOKEN,
+				http,
+				url: `${GITHUB_HOST}/${owner}/${repo}.git`,
+				onAuth: () => auth,
 			});
 			return remoteInfo.refs;
 		},
