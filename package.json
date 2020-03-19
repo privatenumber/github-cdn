@@ -16,7 +16,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "got": "^10.6.0",
-    "isomorphic-git": "^0.72.0",
+    "isomorphic-git": "^1.3.1",
     "keyv": "^4.0.0",
     "keyv-memcache": "^0.8.0",
     "lodash": "^4.17.15",
