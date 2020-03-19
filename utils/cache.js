@@ -9,4 +9,8 @@ const cache = new Keyv({
 	store: new KeyvMemcache(process.env.MEMCACHED),
 });
 
+cache.on('error', (err) => {
+	console.log('Keyv error:', err);
+});
+
 export default cache;

@@ -37,6 +37,9 @@ async function cacheFallback({
 			cache.set(key, {
 				data,
 				created: Date.now(),
+			}).catch((err) => {
+				console.log(`${err.message} for key "${key}"`);
+				console.log(err);
 			});
 		} catch (err) {
 			result.err = err;

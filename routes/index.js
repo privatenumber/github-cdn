@@ -23,6 +23,11 @@ router.get('/', (req, res) => {
 `);
 });
 
+router.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	next();
+});
+
 router.get(
 	'/:owner',
 	(req, res) => res.status(400).json({ error: 'Missing "repo" in URL' }),
