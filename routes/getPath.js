@@ -3,7 +3,7 @@ import { getPath } from '../utils/github';
 
 export default async (req, res) => {
 	const {
-		owner, repo, ref, path = '/',
+		owner, repo, ref, path = '',
 	} = req.params;
 
 	const { err, source, data: pathData } = await getPath({
