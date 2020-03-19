@@ -37,7 +37,11 @@ router.get('/:owner/:repo', getRepo);
 
 router.get(
 	'/:owner/:repo/:ref:path(/*)?',
-	[resolveSemver, serveBadgen, getPath],
+	[
+		resolveSemver,
+		serveBadgen,
+		getPath,
+	],
 );
 
 export default router;
