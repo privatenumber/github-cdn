@@ -1,3 +1,4 @@
+import { extname } from 'path';
 import { pick } from 'lodash';
 import { getPath } from '../utils/github';
 
@@ -27,6 +28,10 @@ export default async (req, res) => {
 		return res.json(pathData.map((file) => pick(file, ['name', 'path', 'type'])));
 	}
 
+	const extension = extname(pathData.name).slice(1);
 	const content = Buffer.from(pathData.content, 'base64').toString();
-	return res.end(content);
+
+	return res
+		.type(extension)
+		.end(content);
 };
