@@ -31,6 +31,11 @@ export default async (req, res, next) => {
 		if (matchesVersion !== ref) {
 			return res.redirect(`/${owner}/${repo}/${matchesVersion}${path}${req._parsedUrl.search || ''}`);
 		}
+
+		// Versioned assets should be immutable
+		res.header('Cache-Control', 'public, max-age=31536000, immutable');
+	} else {
+		res.header('Cache-Control', 'public, max-age=10');		
 	}
 
 	return next();
