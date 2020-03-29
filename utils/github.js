@@ -76,13 +76,12 @@ export function getPath({
 			}
 
 			if (res.statusCode !== 200) {
-
-				const isTooLarge = body.errors && body.errors.find(e => e.code === 'too_large');
+				const isTooLarge = body.errors && body.errors.find((e) => e.code === 'too_large');
 				if (isTooLarge) {
 					const dirPath = nodePath.dirname(filePath);
 					const dirRes = await gitApi(`${dirPath}?${query}`).json();
 					const fileName = nodePath.basename(filePath);
-					const { sha } = dirRes.find(f => f.name === fileName);
+					const { sha } = dirRes.find((f) => f.name === fileName);
 					return getBlob({ owner, repo, sha });
 				}
 

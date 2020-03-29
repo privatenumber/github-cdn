@@ -33,7 +33,7 @@ export default async (req, res, next) => {
 		// Versioned assets should be immutable
 		res.header('Cache-Control', 'public, max-age=31536000, immutable');
 	} else {
-		res.header('Cache-Control', 'public, max-age=10');		
+		res.header('Cache-Control', 'public, max-age=10');
 	}
 
 	return next();
