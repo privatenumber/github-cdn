@@ -11,6 +11,6 @@ export default (req, res, next) => {
 	}
 
 	return badgen({ name: repo, version: ref })
-		.on('error', (err) => res.json({ error: `Could not generate badge: ${err.message}` }))
+		.on('error', (err) => res.send({ error: `Could not generate badge: ${err.message}` }))
 		.pipe(res);
 };

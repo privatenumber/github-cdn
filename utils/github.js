@@ -1,6 +1,7 @@
 import qs from 'querystring';
 import assert from 'assert';
 import got from 'got';
+import nodePath from 'path';
 import { getRemoteInfo as igGetRemoteInfo } from 'isomorphic-git';
 import http from 'isomorphic-git/http/node';
 import cacheFallback from './cacheFallback';
@@ -19,11 +20,11 @@ if (!/^https?:\/\//.test(GITHUB_HOST)) {
 
 const gitApi = got.extend({
 	prefixUrl: `${GITHUB_HOST}/api/v3/`,
-	responseType: 'json',
 	throwHttpErrors: false,
 	timeout: 10000,
 	headers: {
 		Authorization: `token ${GITHUB_TOKEN}`,
+		Accept: 'application/vnd.github.v3.raw+json',
 	},
 });
 
@@ -48,6 +49,10 @@ export function getRemoteInfo({ owner, repo }) {
 	});
 }
 
+function getBlob({ owner, repo, sha }) {
+	return gitApi(`repos/${owner}/${repo}/git/blobs/${sha}`).text();
+}
+
 export function getPath({
 	owner, repo, ref, path = '',
 }) {
@@ -61,15 +66,32 @@ export function getPath({
 		cacheDuration,
 		key: `contents:${owner}-${repo}-${ref}-${cleanPath}`,
 		request: async () => {
-			const res = await gitApi(`repos/${owner}/${repo}/contents/${cleanPath}?${qs.stringify({ ref })}`);
+			const filePath = `repos/${owner}/${repo}/contents${cleanPath}`;
+			const query = qs.stringify({ ref });
+			const res = await gitApi(`${filePath}?${query}`);
+
+			let { body } = res;
+			if (res.headers['content-type'].indexOf('application/json') > -1) {
+				body = JSON.parse(body);
+			}
 
 			if (res.statusCode !== 200) {
-				const err = new Error(res.body.message);
+
+				const isTooLarge = body.errors && body.errors.find(e => e.code === 'too_large');
+				if (isTooLarge) {
+					const dirPath = nodePath.dirname(filePath);
+					const dirRes = await gitApi(`${dirPath}?${query}`).json();
+					const fileName = nodePath.basename(filePath);
+					const { sha } = dirRes.find(f => f.name === fileName);
+					return getBlob({ owner, repo, sha });
+				}
+
+				const err = new Error(body.message);
 				err.statusCode = res.statusCode;
 				throw err;
 			}
 
-			return res.body;
+			return body;
 		},
 	});
 }

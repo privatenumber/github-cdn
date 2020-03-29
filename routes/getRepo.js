@@ -6,5 +6,5 @@ export default async (req, res) => {
 
 	res
 		.header('GIT-CDN-SOURCE', source)
-		.json(remoteInfo);
+		.send(remoteInfo);
 };
