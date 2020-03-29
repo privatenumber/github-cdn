@@ -22,9 +22,7 @@ export default async (req, res, next) => {
 				});
 		}
 
-		const versions = Object.keys(refs.tags)
-			.filter((t) => !t.endsWith('^{}'))
-			.filter(semver.valid);
+		const versions = Object.keys(refs.tags).filter(semver.valid);
 
 		const matchesVersion = semver.maxSatisfying(versions, ref);
 
