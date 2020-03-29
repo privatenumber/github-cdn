@@ -14,7 +14,7 @@ export default async (req, res, next) => {
 		if (err) {
 			return res
 				.status(err.statusCode || 500)
-				.json({
+				.send({
 					message: err.message,
 					request: {
 						owner, repo, ref, path,

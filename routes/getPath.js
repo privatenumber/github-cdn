@@ -7,14 +7,14 @@ export default async (req, res) => {
 		owner, repo, ref, path = '',
 	} = req.params;
 
-	const { err, source, data: pathData } = await getPath({
+	const { err, source, data } = await getPath({
 		owner, repo, ref, path,
 	});
 
 	if (err) {
 		return res
 			.status(err.statusCode || 500)
-			.json({
+			.send({
 				message: err.message,
 				request: {
 					owner, repo, ref, path,
@@ -24,14 +24,13 @@ export default async (req, res) => {
 
 	res.header('GIT-CDN-SOURCE', source);
 
-	if (Array.isArray(pathData)) {
-		return res.json(pathData.map((file) => pick(file, ['name', 'path', 'type'])));
+	if (Array.isArray(data)) {
+		return res.send(data.map((file) => pick(file, ['name', 'path', 'type'])));
 	}
 
-	const extension = extname(pathData.name).slice(1);
-	const content = Buffer.from(pathData.content, 'base64').toString();
+	const extension = extname(path).slice(1);
 
 	return res
 		.type(extension)
-		.end(content);
+		.end(data);
 };

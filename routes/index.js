@@ -30,7 +30,7 @@ router.use((req, res, next) => {
 
 router.get(
 	'/:owner',
-	(req, res) => res.status(400).json({ error: 'Missing "repo" in URL' }),
+	(req, res) => res.status(400).send({ error: 'Missing "repo" in URL' }),
 );
 
 router.get('/:owner/:repo', getRepo);
