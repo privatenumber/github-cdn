@@ -3,6 +3,7 @@ import getRepo from './getRepo';
 import resolveSemver from './resolveSemver';
 import serveBadgen from './serveBadgen';
 import getPath from './getPath';
+import { canAccess } from '../utils/config';
 
 const router = Router();
 
@@ -32,6 +33,17 @@ router.get(
 	'/:owner',
 	(req, res) => res.status(400).send({ error: 'Missing "repo" in URL' }),
 );
+
+router.get('/:owner/:repo*', (req, res, next) => {
+	if (canAccess(req.params)) {
+		next();
+		return;
+	}
+
+	res
+		.status(401)
+		.send({ error: 'Unauthorized access' });
+});
 
 router.get('/:owner/:repo', getRepo);
 

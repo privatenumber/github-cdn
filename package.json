@@ -11,6 +11,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "cosmiconfig": "^6.0.0",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
