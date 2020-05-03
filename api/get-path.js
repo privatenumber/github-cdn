@@ -1,7 +1,9 @@
 const mime = require('mime');
+const log = require('../lib/utils/log');
 const resolveRef = require('../lib/resolve-ref');
 const badgenUrl = require('../lib/badgen-url');
 const getPath = require('../lib/github.get-path');
+const config = require('../lib/utils/config');
 
 const constructUrl = ({
  owner, repo, ref, badge, path = '',
@@ -13,8 +15,18 @@ const redirect = (res, dest) => {
 };
 
 module.exports = async (req, res) => {
+	log('[req:get-path]', req.url);
 	const query = { ...req.query, ...req.params };
-	const resolved = await resolveRef(query);
+
+	if (!config.canAccess(query)) {
+		return res.status(401).send({ err: 'Unauthorized access' });
+	}
+
+	const resolved = await resolveRef(query).catch((err) => {
+		res.status(422).send({ err: err.message });
+	});
+
+	if (!resolved) { return; }
 
 	const cacheAge = (!resolved.ref && resolved.type === 'version') ? '31536000, immutable' : '60';
 	res.setHeader('Cache-Control', `public, max-age=${cacheAge}`);
