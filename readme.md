@@ -48,16 +48,15 @@ _* Unless the request fails due to network failure or rate-limiting_
   - eg. [`/vuejs/vue/v2.6.11/dist/vue.min.js`](https://github-cdn.now.sh/vuejs/vue/v2.6.11/dist/vue.min.js)
 
 - `/ratelimit`
-  - See the rate limit quota available on the Github API.
+  - See the rate limit quota available on the Github API
   - Due to this limitation, **Github CDN is not a production-ready solution** to hosting code
-  - Set a custom token to use your own quota
 
 ### Setting a custom token (for rate-limiting & private repos)
 You can use the token-input to attach your token to every Github CDN request via browser cookies.
 
 <!-- insert-token-input -->
 
-By using a custom token, you can access your private repos and use your own [rate limit quota](https://developer.github.com/v3/#rate-limiting.
+By using a custom token, you can access your private repos and use your own [rate limit quota](https://developer.github.com/v3/#rate-limiting).
 
 ---
 
