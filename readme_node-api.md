@@ -10,11 +10,15 @@ $ npm i github-cdn
 ### Add to Express
 ```js
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import githubCdnRouter from 'github-cdn';
 
 const app = express();
 
 ...
+
+// For parsing the custom token
+app.use(cookieParser());
 
 app.use(githubCdnRouter);
 

@@ -5,10 +5,10 @@ const config = require('../lib/utils/config');
 module.exports = (req, res) => {
 	log('[req:get-repo]', req.url);
 
-	const query = { ...req.query, ...req.params };
+	const query = { ...req.cookies, ...req.query, ...req.params };
 
 	if (!config.canAccess(query)) {
-		return res.status(401).send({ error: 'Unauthorized access' });
+		return res.status(401).send({ err: 'Restricted access' });
 	}
 
 	getRemoteInfo(query).then(
