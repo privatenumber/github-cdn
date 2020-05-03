@@ -6,7 +6,9 @@ Designed to provide:
 - an endpoint to retrieve branches/tags/PRs of a repo
 - an easy way to serve files before publishing them
 - access to [npm excluded files](https://docs.npmjs.com/using-npm/developers.html#keeping-files-out-of-your-package)
-- immediate (low server-caching) access to new changes pushed to Github
+- immediate (low server-caching) access to new changes pushed to Github *
+
+_* Unless the request fails due to network failure or throttling_
 
 ## 💁‍♀️ Endpoints
 - `/:owner/:repo`
@@ -36,7 +38,7 @@ Designed to provide:
   - eg. [`/vuejs/vue/latest`](https://github-cdn.now.sh/vuejs/vue/latest)
 
 - `/:owner/:repo/:ref?badge`
-  - Resolves the ref and pipes request to [Badgen](https://badgen.net)
+  - Resolves the ref and redirects to [Badgen](https://badgen.net)
   - eg. ![Latest Vue badge](https://github-cdn.now.sh/vuejs/vue/latest?badge)
 
 - `/:owner/:repo/:ref/:path`

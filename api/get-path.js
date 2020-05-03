@@ -1,10 +1,10 @@
 const mime = require('mime');
 const resolveRef = require('../lib/resolve-ref');
-const badgen = require('../lib/badgen');
+const badgenUrl = require('../lib/badgen-url');
 const getPath = require('../lib/github.get-path');
 
 const constructUrl = ({
- owner, repo, ref, badge, path,
+ owner, repo, ref, badge, path = '',
 }) => `/${owner}/${repo}/${ref}${path}${(badge === '') ? '?badge' : ''}`;
 
 const redirect = (res, dest) => {
@@ -13,11 +13,10 @@ const redirect = (res, dest) => {
 };
 
 module.exports = async (req, res) => {
-	const { query } = req;
-
+	const query = { ...req.query, ...req.params };
 	const resolved = await resolveRef(query);
 
-	const cacheAge = (!resolved.ref && resolved.type === 'version') ? '31536000, immutable' : '10';
+	const cacheAge = (!resolved.ref && resolved.type === 'version') ? '31536000, immutable' : '60';
 	res.setHeader('Cache-Control', `public, max-age=${cacheAge}`);
 
 	if (resolved.ref) {
@@ -28,16 +27,19 @@ module.exports = async (req, res) => {
 
 	if (!path) {
 		if (query.badge === '') {
-			badgen(query)
-				.on('error', (err) => res.status(502).send({ error: `Could not generate badge: ${err.message}` }))
-				.pipe(res);
+			redirect(res, badgenUrl(query));
 		} else {
 			redirect(res, constructUrl({ ...query, path: '/' }));
 		}
 		return;
 	}
 
-	const { source, data } = await getPath(query);
-	res.setHeader('Content-type', mime.getType(query.path));
-	res.send(data);
+	await getPath(query).then(
+		({ source, data }) => {
+			res.setHeader('X-GITHUB-CDN-SOURCE', source);
+			res.setHeader('Content-type', mime.getType(path));
+			res.send(data);
+		},
+		(err) => res.status(422).send({ err: err.message }),
+	);
 };
