@@ -3,7 +3,9 @@ const resolveRef = require('../lib/resolve-ref');
 const badgen = require('../lib/badgen');
 const getPath = require('../lib/github.get-path');
 
-const constructUrl = ({ owner, repo, ref, badge, path }) => `/${owner}/${repo}/${ref}${path}${(badge === '')? '?badge' : ''}`;
+const constructUrl = ({
+ owner, repo, ref, badge, path,
+}) => `/${owner}/${repo}/${ref}${path}${(badge === '') ? '?badge' : ''}`;
 
 const redirect = (res, dest) => {
 	res.setHeader('Location', dest);
