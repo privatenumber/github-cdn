@@ -3,7 +3,7 @@ Github CDN offers a Node.js API so you can roll your own instance. You might wan
 
 ## 🚀 Quick setup
 ### Install
-```
+```sh
 $ npm i github-cdn
 ```
 
@@ -40,6 +40,7 @@ The configuration file is detected and read using [cosmicconfig](https://github.
   - `token` (`String`) - Github API token
 
 - `memcached` (`String`) - Memcached `host:port` (eg. `localhost:11211`)
+
    _Tip: Set a higher storage limit via `memcached -I 10m`_
 
 - `whitelist` (`Array<Object>`) - Only allow access to specific repos
