@@ -49,12 +49,16 @@ _* Unless the request fails due to network failure or rate-limiting_
 
 - `/ratelimit`
 
-### Using your token / rate-limiting
+### Using a token (for rate-limiting & private repos)
+
+<!-- token-input -->
+
 The end-points can sometimes return a "rate limit exceeded" error because Github [rate-limits their API](https://developer.github.com/v3/#rate-limiting).
 
-Due to this limitation, [Github CDN] is not a production-ready solution to hosting code.
+Due to this limitation, **Github CDN is not a production-ready solution** to hosting code.
 
-By adding your own token as a cookie in your requests, the requests will be made using your token and any caching will be scoped to your token.
+By setting your token via cookie in your requests, Github requests can be made using it to use your own rate-limit quota and access your private repos.
+Any caching will be scoped to your token.
 
 ---
 
