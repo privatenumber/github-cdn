@@ -3,7 +3,7 @@ const serveLanding = require('./api/serve-landing');
 const getRepo = require('./api/get-repo');
 const getPath = require('./api/get-path');
 
-const router = Router();
+const router = Router({ strict: true });
 
 router.get('/', serveLanding);
 
@@ -12,7 +12,7 @@ router.use((req, res, next) => {
 	next();
 });
 
-router.get('/:owner/:repo/:ref?:path(/*)?', getPath);
 router.get('/:owner/:repo?', getRepo);
+router.get('/:owner/:repo/:ref?:path(/*)?', getPath);
 
 module.exports = router;

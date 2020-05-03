@@ -4,11 +4,12 @@ Github CDN is [UNPKG](https://unpkg.com/) for Github — an unofficial content d
 
 Designed to provide:
 - an endpoint to retrieve branches/tags/PRs of a repo
-- an easy way to serve dev files before publishing them
+- an easy way to serve dev code before publishing them
 - access to [npm excluded files](https://docs.npmjs.com/using-npm/developers.html#keeping-files-out-of-your-package)
 - immediate (micro-cached) access to new changes pushed to Github *
+- Node API for compatibility with Github Enterprise
 
-_* Unless the request fails due to network failure or throttling_
+_* Unless the request fails due to network failure or rate-limiting_
 
 ## 💁‍♀️ Endpoints
 - `/:owner/:repo`
@@ -39,12 +40,21 @@ _* Unless the request fails due to network failure or throttling_
 
 - `/:owner/:repo/:ref?badge`
   - Resolves the ref and redirects to [Badgen](https://badgen.net)
-  - eg. ![Latest Vue badge](https://github-cdn.now.sh/vuejs/vue/latest?badge)
+  - eg. `/vuejs/vue/latest?badge` ![Latest Vue badge](https://github-cdn.now.sh/vuejs/vue/latest?badge)
 
 - `/:owner/:repo/:ref/:path`
   - Get a file or list directory in a repo ref
   - eg. [`/vuejs/vue/v2.6.11/dist/`](https://github-cdn.now.sh/vuejs/vue/v2.6.11/dist/)
   - eg. [`/vuejs/vue/v2.6.11/dist/vue.min.js`](https://github-cdn.now.sh/vuejs/vue/v2.6.11/dist/vue.min.js)
+
+- `/ratelimit`
+
+### Using your token / rate-limiting
+The end-points can sometimes return a "rate limit exceeded" error because Github [rate-limits their API](https://developer.github.com/v3/#rate-limiting).
+
+Due to this limitation, [Github CDN] is not a production-ready solution to hosting code.
+
+By adding your own token as a cookie in your requests, the requests will be made using your token and any caching will be scoped to your token.
 
 ---
 

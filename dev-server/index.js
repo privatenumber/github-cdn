@@ -1,16 +1,12 @@
-import 'dotenv/config';
-import express from 'express';
-import assert from 'assert';
-import Debug from 'debug';
-import routes from '..';
-
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+require('dotenv/config');
+const express = require('express');
+const Debug = require('debug');
+const routes = require('..');
 
 const debug = Debug('github-cdn');
-const { PORT } = process.env;
-assert(PORT, 'process.env.PORT not defined');
+const { PORT = 3005 } = process.env;
 
 const app = express();
 app.disable('x-powered-by');
 app.use(routes);
-app.listen(PORT, () => debug(`Github CDN listening on ${PORT}!`));
+const listener = app.listen(PORT, () => debug(`Github CDN listening on http://localhost:${listener.address().port}`));
