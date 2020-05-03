@@ -21,7 +21,7 @@ const landingTpl = `
 <body>
 	<div id="md" class="markdown-body">Loading...</div>
 	<script type="text/javascript">
-	fetch('https://github-cdn.now.sh/privatenumber/github-cdn/master/README.md')
+	fetch('https://github-cdn.now.sh/privatenumber/github-cdn/master/readme.md')
 		.then(r => r.text())
 		.then(mdStr => {
 			md.innerHTML = marked(mdStr);
