@@ -11,7 +11,7 @@ Designed to provide:
 ## 💁‍♀️ Endpoints
 - `/:owner/:repo`
   - Get the default branch and all refs (branches, tags, and PRs)
-  - eg. [`/vuejs/vue`](/vuejs/vue) to retrieve meta data on [vuejs/vue](https://github.com/vuejs/vue)
+  - eg. [`/vuejs/vue`](https://github-cdn.now.sh/vuejs/vue) to retrieve meta data on [vuejs/vue](https://github.com/vuejs/vue)
 
   <details>
   	<summary><i>Example output</i></summary>
@@ -31,18 +31,18 @@ Designed to provide:
 
 - `/:owner/:repo/:ref`
   - Resolve repo ref if semver. Redirects to root of repo ref
-  - eg. [`/vuejs/vue/master`](/vuejs/vue/master)
-  - eg. [`/vuejs/vue/^2.0.0`](/vuejs/vue/^2.0.0)
-  - eg. [`/vuejs/vue/latest`](/vuejs/vue/latest)
+  - eg. [`/vuejs/vue/master`](https://github-cdn.now.sh/vuejs/vue/master)
+  - eg. [`/vuejs/vue/^2.0.0`](https://github-cdn.now.sh/vuejs/vue/^2.0.0)
+  - eg. [`/vuejs/vue/latest`](https://github-cdn.now.sh/vuejs/vue/latest)
 
 - `/:owner/:repo/:ref?badge`
   - Resolves the ref and pipes request to [Badgen](https://badgen.net)
-  - eg. ![Latest Vue badge](/vuejs/vue/latest?badge)
+  - eg. ![Latest Vue badge](https://github-cdn.now.sh/vuejs/vue/latest?badge)
 
 - `/:owner/:repo/:ref/:path`
   - Get a file or list directory in a repo ref
-  - eg. [`/vuejs/vue/v2.6.11/dist/`](/vuejs/vue/v2.6.11/dist/)
-  - eg. [`/vuejs/vue/v2.6.11/dist/vue.min.js`](/vuejs/vue/v2.6.11/dist/vue.min.js)
+  - eg. [`/vuejs/vue/v2.6.11/dist/`](https://github-cdn.now.sh/vuejs/vue/v2.6.11/dist/)
+  - eg. [`/vuejs/vue/v2.6.11/dist/vue.min.js`](https://github-cdn.now.sh/vuejs/vue/v2.6.11/dist/vue.min.js)
 
 ---
 
