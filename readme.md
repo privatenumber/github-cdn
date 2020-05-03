@@ -7,7 +7,7 @@ Designed to provide:
 - an easy way to serve dev code before publishing them
 - access to [npm excluded files](https://docs.npmjs.com/using-npm/developers.html#keeping-files-out-of-your-package)
 - immediate (micro-cached) access to new changes pushed to Github *
-- Node API for compatibility with Github Enterprise
+- [Node API](https://github.com/privatenumber/github-cdn/blob/master/readme_node-api.md) for compatibility with Github Enterprise
 
 _* Unless the request fails due to network failure or rate-limiting_
 
