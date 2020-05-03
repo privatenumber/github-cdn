@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
 	const data = await githubApi('rate_limit').json();
 
 	res.send({
-		token_source: ('token' in req.cookies ? 'Cookie' : ( github.token ? 'Server' : 'N/A')),
+		token_source: (req.cookies.token ? 'Cookie' : ( github.token ? 'Server' : 'N/A')),
 		rate: data.resources.core,
 	});
 };
