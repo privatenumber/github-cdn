@@ -6,8 +6,8 @@
   "license": "MIT",
   "main": "routes/index.js",
   "scripts": {
-    "start": "node -r esm server",
-    "dev": "DEBUG=github-cdn nodemon -r esm server",
+    "start": "node -r esm dev-server",
+    "dev": "DEBUG=github-cdn nodemon -r esm dev-server",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "keyv": "^4.0.0",
     "keyv-memcache": "^0.8.0",
     "lodash": "^4.17.15",
+    "mime": "^2.4.5",
     "semver": "^7.1.3"
   },
   "devDependencies": {
