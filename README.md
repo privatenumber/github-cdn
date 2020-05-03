@@ -16,7 +16,7 @@ Designed to provide:
   <details>
   	<summary><i>Example output</i></summary>
 
-  `json5
+  ```json5
   {
   	"defaultBranch": "master",
   	"refs": {
@@ -25,7 +25,7 @@ Designed to provide:
   		"pull": { ... }
   	}
   }
-  `
+  ```
 
   </details>
 
