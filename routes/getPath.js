@@ -1,6 +1,6 @@
 import { extname } from 'path';
 import { pick } from 'lodash';
-import { getPath } from '../utils/github';
+import { getPath } from '../lib/utils/github';
 
 export default async (req, res) => {
 	const {

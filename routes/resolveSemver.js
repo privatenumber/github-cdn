@@ -1,5 +1,5 @@
 import semver from 'semver';
-import { getRemoteInfo } from '../utils/github';
+import { getRemoteInfo } from '../lib/utils/github';
 
 export default async (req, res, next) => {
 	const { owner, repo, path = '/' } = req.params;

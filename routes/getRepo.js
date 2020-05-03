@@ -1,4 +1,4 @@
-import { getRemoteInfo } from '../utils/github';
+import { getRemoteInfo } from '../lib/utils/github';
 
 export default async (req, res) => {
 	const { owner, repo } = req.params;
