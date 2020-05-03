@@ -1,4 +1,4 @@
-# 🛰 Github CDN [![GitHub stars](https://img.shields.io/github/stars/privatenumber/github-cdn.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/privatenumber/github-cdn/stargazers/)
+# 🛰 Github CDN [![GitHub stars](https://img.shields.io/github/stars/privatenumber/github-cdn.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/privatenumber/github-cdn)
 
 Github CDN is [UNPKG](https://unpkg.com/) for Github — an unofficial content delivery network for every repo on Github.
 
