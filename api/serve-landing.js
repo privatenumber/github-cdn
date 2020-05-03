@@ -52,7 +52,12 @@ const landingTpl = `
 				}
 			});
 			$input.addEventListener('change', () => {
-				Cookies.set('token', $input.value);
+				const { value } = $input;
+				if (!value) {
+					Cookies.remove(value);
+				} else {
+					Cookies.set('token', value);
+				}
 				$success.classList.add('visible');
 				setTimeout(() => $success.classList.remove('visible'), 1000);
 			});
