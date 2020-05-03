@@ -16,15 +16,50 @@ const landingTpl = `
 		width: 70vw;
 		margin: 32px auto;
 	}
+	.success {
+		opacity: 0;
+		transition: .2s ease-in opacity;
+	}
+	.visible {
+		opacity: 1;
+	}
 	</style>
 </head>
 <body>
 	<div id="md" class="markdown-body">Loading...</div>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	<script type="text/javascript">
 	fetch('https://github-cdn.now.sh/privatenumber/github-cdn/master/readme.md')
 		.then(r => r.text())
 		.then(mdStr => {
 			md.innerHTML = marked(mdStr);
+
+			const commentNode = Array.from(md.childNodes).find((n) => n.nodeType === 8);
+
+			const fragment = document.createDocumentFragment();
+
+			const $success = document.createElement('span');
+			$success.classList = 'success';
+			$success.innerHTML = ' ✅';
+
+			const $input = document.createElement('input');
+			$input.style = 'width: 90%;'
+			$input.placeholder = 'Github token cookie';
+			$input.value = Cookies.get('token') || '';
+			$input.addEventListener('keyup', (e) => {
+				if (e.key === 'Enter') {
+					$input.blur();
+				}
+			});
+			$input.addEventListener('change', () => {
+				Cookies.set('token', $input.value);
+				$success.classList.add('visible');
+				setTimeout(() => $success.classList.remove('visible'), 1000);
+			});
+
+			fragment.append($input, $success);
+
+			commentNode.parentNode.replaceChild(fragment, commentNode);
 		});
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

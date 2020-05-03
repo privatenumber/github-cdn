@@ -16,10 +16,11 @@ const redirect = (res, dest) => {
 
 module.exports = async (req, res) => {
 	log('[req:get-path]', req.url);
-	const query = { ...req.query, ...req.params };
+
+	const query = { ...req.cookies, ...req.query, ...req.params };
 
 	if (!config.canAccess(query)) {
-		return res.status(401).send({ err: 'Unauthorized access' });
+		return res.status(401).send({ err: 'Restricted access' });
 	}
 
 	const resolved = await resolveRef(query).catch((err) => {
