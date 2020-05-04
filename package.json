@@ -16,7 +16,12 @@
     "url": "https://github.com/privatenumber/github-cdn/issues"
   },
   "homepage": "https://github.com/privatenumber/github-cdn#readme",
-  "main": "create-router.js",
+  "files": [
+    "lib",
+    "api",
+    "index.js"
+  ],
+  "main": "index.js",
   "scripts": {
     "dev": "cd dev-server && DEBUG=github-cdn nodemon . --watch ..",
     "lint": "eslint ."
