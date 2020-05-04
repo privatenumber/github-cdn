@@ -15,12 +15,12 @@
 			"dest": "/api/get-ratelimit"
 		},
 		{
-			"src": "/([^/]+)/([^/]+)/([^/]*)(/.*)?",
-			"dest": "/api/get-path?owner=$1&repo=$2&ref=$3&path=$4"
+			"src": "/([^/]+)(?:/([^/]*)/?)?",
+			"dest": "/api/get-repo?owner=$1&repo=$2"
 		},
 		{
-			"src": "/([^/]+)/?(.*)",
-			"dest": "/api/get-repo?owner=$1&repo=$2"
+			"src": "/([^/]+)/([^/]+)/([^/]*)(/.*)?",
+			"dest": "/api/get-path?owner=$1&repo=$2&ref=$3&path=$4"
 		}
 	]
 }
