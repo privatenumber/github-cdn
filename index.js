@@ -5,7 +5,7 @@ const getRepo = require('./api/get-repo');
 const getPath = require('./api/get-path');
 
 function githubCdnRouter() {
-	const router = Router({ strict: true });
+	const router = Router();
 
 	router.get('/', serveLanding);
 

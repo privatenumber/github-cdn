@@ -4,15 +4,11 @@ const resolveRef = require('../lib/resolve-ref');
 const badgenUrl = require('../lib/badgen-url');
 const getPath = require('../lib/github.get-path');
 const config = require('../lib/utils/config');
+const redirect = require('../lib/utils/redirect');
 
 const constructUrl = ({
  owner, repo, ref, badge, path = '',
 }) => `/${owner}/${repo}/${ref}${path}${(badge === '') ? '?badge' : ''}`;
-
-const redirect = (res, dest) => {
-	res.setHeader('Location', dest);
-	res.status(302).end();
-};
 
 module.exports = async (req, res) => {
 	log('[req:get-path]', req.url);
@@ -33,16 +29,16 @@ module.exports = async (req, res) => {
 	res.setHeader('Cache-Control', `public, max-age=${cacheAge}`);
 
 	if (resolved.ref) {
-		return redirect(res, constructUrl({ ...query, ...resolved }));
+		return redirect(res, 302, constructUrl({ ...query, ...resolved }));
 	}
 
 	const { path } = query;
 
 	if (!path) {
 		if (query.badge === '') {
-			redirect(res, badgenUrl(query));
+			redirect(res, 301, badgenUrl(query));
 		} else {
-			redirect(res, constructUrl({ ...query, path: '/' }));
+			redirect(res, 301, constructUrl({ ...query, path: '/' }));
 		}
 		return;
 	}
