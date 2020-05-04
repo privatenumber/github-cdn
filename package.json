@@ -12,6 +12,10 @@
   ],
   "author": "Hiroki Osame <hiroki.osame@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/privatenumber/github-cdn/issues"
+  },
+  "homepage": "https://github.com/privatenumber/github-cdn#readme",
   "main": "create-router.js",
   "scripts": {
     "dev": "cd dev-server && DEBUG=github-cdn nodemon . --watch ..",
