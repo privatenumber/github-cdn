@@ -4,51 +4,42 @@ const resolveRef = require('../lib/resolve-ref');
 const badgenUrl = require('../lib/badgen-url');
 const getPath = require('../lib/github.get-path');
 const config = require('../lib/utils/config');
-const redirect = require('../lib/utils/redirect');
+const route = require('../lib/utils/route');
 
 const constructUrl = ({
- owner, repo, ref, badge, path = '',
+	owner, repo, ref, badge, path = '',
 }) => `/${owner}/${repo}/${ref}${path}${(badge === '') ? '?badge' : ''}`;
 
-module.exports = async (req, res) => {
+module.exports = route(async (req, res) => {
 	log('[req:get-path]', req.url);
 
 	const query = { ...req.cookies, ...req.query, ...req.params };
 
-	if (!config.canAccess(query)) {
-		return res.status(401).send({ err: 'Restricted access' });
-	}
+	res.assert(config.canAccess(query), 401, 'Restricted access');
 
-	const resolved = await resolveRef(query).catch((err) => {
-		res.status(422).send({ err: err.message });
-	});
-
-	if (!resolved) { return; }
+	const resolved = await resolveRef(query);
 
 	const cacheAge = (!resolved.ref && resolved.type === 'version') ? '31536000, immutable' : '60';
 	res.setHeader('Cache-Control', `public, max-age=${cacheAge}`);
 
 	if (resolved.ref) {
-		return redirect(res, 302, constructUrl({ ...query, ...resolved }));
+		return res.redirect(302, constructUrl({ ...query, ...resolved }));
 	}
 
 	const { path } = query;
 
 	if (!path) {
-		if (query.badge === '') {
-			redirect(res, 301, badgenUrl(query));
-		} else {
-			redirect(res, 301, constructUrl({ ...query, path: '/' }));
-		}
-		return;
+		return res.redirect(
+			301,
+			query.badge === '' ? badgenUrl(query) : constructUrl({ ...query, path: '/' }),
+		);
 	}
 
-	await getPath(query).then(
-		({ source, data }) => {
-			res.setHeader('X-GITHUB-CDN-SOURCE', source);
-			res.setHeader('Content-type', mime.getType(path));
-			res.send(data);
-		},
-		(err) => res.status(422).send({ err: err.message }),
-	);
-};
+	const { source, data } = await getPath(query);
+	res
+		.headers({
+			'X-GITHUB-CDN-SOURCE': source,
+			'Content-type': mime.getType(path),
+		})
+		.send(data);
+});
