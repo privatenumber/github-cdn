@@ -1,31 +1,25 @@
-const assert = require('assert');
 const log = require('../lib/utils/log');
 const getRemoteInfo = require('../lib/github.get-remote-info');
 const config = require('../lib/utils/config');
-const redirect = require('../lib/utils/redirect');
+const route = require('../lib/utils/route');
 
-module.exports = (req, res) => {
+module.exports = route(async (req, res) => {
 	log('[req:get-repo]', req.url);
 
 	const query = { ...req.cookies, ...req.query, ...req.params };
 
-	if (!config.canAccess(query)) {
-		return res.status(401).send({ err: 'Restricted access' });
-	}
-
-	assert(query.owner, '`owner` must be passed in');
-	assert(query.repo, '`repo` must be passed in');
+	res
+		.assert(config.canAccess(query), 401, 'Restricted access')
+		.assert(query.owner, 422, '`owner` must be passed in')
+		.assert(query.repo, 422, '`repo` must be passed in');
 
 	if (!new URL(req.url, 'http://a').pathname.endsWith('/')) {
-		return redirect(res, 301, `/${query.owner}/${query.repo}/`);
+		return res.redirect(301, `/${query.owner}/${query.repo}/`);
 	}
 
-	getRemoteInfo(query).then(
-		({ source, data }) => {
-			res.setHeader('X-GITHUB-CDN-SOURCE', source);
-			res.setHeader('Cache-Control', 'public, max-age=60, immutable');
-			res.send(data);
-		},
-		(err) => res.status(422).send({ err: err.message }),
-	);
-};
+	const { source, data } = await getRemoteInfo(query);
+	res.headers({
+		'X-GITHUB-CDN-SOURCE': source,
+		'Cache-Control': 'public, max-age=60, immutable',
+	}).send(data);
+});
