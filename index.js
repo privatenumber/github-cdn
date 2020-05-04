@@ -4,7 +4,7 @@ const getRatelimit = require('./api/get-ratelimit');
 const getRepo = require('./api/get-repo');
 const getPath = require('./api/get-path');
 
-function createRouter() {
+function githubCdnRouter() {
 	const router = Router({ strict: true });
 
 	router.get('/', serveLanding);
@@ -21,4 +21,4 @@ function createRouter() {
 	return router;
 }
 
-module.exports = createRouter;
+module.exports = githubCdnRouter;
