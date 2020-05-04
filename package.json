@@ -1,7 +1,15 @@
 {
   "name": "github-cdn",
   "version": "1.0.0",
-  "description": "Github CDN Server",
+  "description": "🛰 Github CDN Server",
+  "keywords": [
+    "github",
+    "cdn",
+    "server",
+    "api",
+    "github api",
+    "github-api"
+  ],
   "author": "Hiroki Osame <hiroki.osame@gmail.com>",
   "license": "MIT",
   "main": "create-router.js",
