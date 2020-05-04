@@ -1,6 +1,6 @@
 # 🛰 Github CDN [![GitHub stars](https://img.shields.io/github/stars/privatenumber/github-cdn.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/privatenumber/github-cdn)
 
-Github CDN is [UNPKG](https://unpkg.com/) for Github — an unofficial content delivery network for every repo on Github.
+Github CDN is [UNPKG](https://unpkg.com/) for Github — an unofficial content delivery network for repo assets on Github.
 
 Designed to provide:
 - an endpoint to retrieve branches/tags/PRs of a repo
@@ -21,7 +21,7 @@ _* Unless the request fails due to network failure or rate-limiting_
 
   ```json5
   {
-  	"defaultBranch": "master",
+  	"default_branch": "master",
   	"refs": {
   		"heads": { ... },
   		"tags": { ... },
