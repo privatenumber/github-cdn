@@ -1,3 +1,4 @@
+const config = require('../lib/utils/config');
 const log = require('../lib/utils/log');
 
 const landingTpl = `
@@ -29,7 +30,7 @@ const landingTpl = `
 	<div id="md" class="markdown-body">Loading...</div>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	<script type="text/javascript">
-	fetch('https://github-cdn.now.sh/privatenumber/github-cdn/master/readme.md?token')
+	fetch('${config.landingPageMdSrc}')
 		.then(r => r.text())
 		.then(mdStr => {
 			md.innerHTML = marked(mdStr);

@@ -20,7 +20,7 @@ const app = express();
 // For parsing the custom token
 app.use(cookieParser());
 
-app.use(githubCdnRouter);
+app.use(githubCdnRouter());
 
 ...
 
@@ -38,6 +38,8 @@ The configuration file is detected and read using [cosmicconfig](https://github.
   - `base` (`String`) - Github URL (default: `https://github.com`)
   - `apiBase` (`String`) - Github API URL (default: `https://api.github.com`)
   - `token` (`String`) - Github API token
+
+- `landingPageMdSrc` (`String`) - URL of a Markdown file to render on the landing page (default: Github CDN readme.md)
 
 - `memcached` (`String`) - Memcached `host:port` (eg. `localhost:11211`)
 
