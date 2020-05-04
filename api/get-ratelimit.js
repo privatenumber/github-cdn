@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
 				return res.status(500).send({ err: data.message });
 			}
 			res.send({
-				token_source: (req.cookies.token ? 'Cookie' : ( github.token ? 'Server' : 'N/A')),
+				token_source: (req.cookies.token ? 'Cookie' : (github.token ? 'Server' : 'N/A')),
 				rate: data.resources.core,
 			});
 		},
