@@ -59,7 +59,7 @@ const landingTpl = `
 				if (!value) {
 					Cookies.remove('token');
 				} else {
-					Cookies.set('token', value);
+					Cookies.set('token', value, { sameSite: 'none' });
 				}
 				$success.classList.add('visible');
 				setTimeout(() => $success.classList.remove('visible'), 1000);
