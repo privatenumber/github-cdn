@@ -49,15 +49,14 @@ _* Unless the request fails due to network failure or rate-limiting_
 
 - `/ratelimit`
   - See the rate limit quota available on the Github API
-  - Due to this limitation, **Github CDN is not a production-ready solution** to hosting code
+  - With rate limiting, **Github CDN is not a production-ready solution** to hosting code
 
 ### 🔑 Setting a custom token (for rate-limiting & private repos)
-You can use the token-input to attach your token to every Github CDN request via browser cookies.
+Configure Github CDN to use your token to access your private repos and your own [rate limit quota](https://developer.github.com/v3/#rate-limiting).
+
+Use the token-input to attach your token to every Github CDN request via browser cookies.
 
 <!-- insert-token-input -->
-
-
-Use your token to access your private repos and your own [rate limit quota](https://developer.github.com/v3/#rate-limiting).
 
 ---
 

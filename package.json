@@ -4,7 +4,7 @@
   "description": "Github CDN Server",
   "author": "Hiroki Osame <hiroki.osame@gmail.com>",
   "license": "MIT",
-  "main": "router.js",
+  "main": "create-router.js",
   "scripts": {
     "dev": "cd dev-server && DEBUG=github-cdn nodemon . --watch ..",
     "lint": "eslint ."
