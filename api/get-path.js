@@ -19,12 +19,12 @@ module.exports = route(async (req, res) => {
 
 	const resolved = await resolveRef(query);
 
-	const cacheAge = (!resolved.ref && resolved.type === 'version') ? '31536000, immutable' : '60';
-	res.setHeader('Cache-Control', `${query.token ? 'private' : 'public'}, max-age=${cacheAge}`);
-
 	if (resolved.ref) {
 		return res.redirect(302, constructUrl({ ...query, ...resolved }));
 	}
+
+	const cacheAge = (!resolved.ref && resolved.type === 'version') ? '31536000, immutable' : '60';
+	res.setHeader('Cache-Control', `${query.token ? 'private' : 'public'}, max-age=${cacheAge}`);
 
 	const { path } = query;
 
