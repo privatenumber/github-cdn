@@ -20,6 +20,6 @@ module.exports = route(async (req, res) => {
 	const { source, data } = await getRemoteInfo(query);
 	res.headers({
 		'X-GITHUB-CDN-SOURCE': source,
-		'Cache-Control': 'public, max-age=60, immutable',
+		'Cache-Control': `${query.token ? 'private' : 'public'}, max-age=60`,
 	}).send(data);
 });
