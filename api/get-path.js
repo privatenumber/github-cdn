@@ -2,7 +2,7 @@ const mime = require('mime');
 const log = require('../lib/utils/log');
 const resolveRef = require('../lib/resolve-ref');
 const badgenUrl = require('../lib/badgen-url');
-const getPath = require('../lib/github.get-path');
+const getPath = require('../lib/github/get-path');
 const config = require('../lib/utils/config');
 const route = require('../lib/utils/route');
 
