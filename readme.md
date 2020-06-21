@@ -2,7 +2,7 @@
 
 [Github CDN](https://github-cdn.now.sh) is [UNPKG](https://unpkg.com/) for Github — an unofficial content delivery network for repo assets on Github.
 
-#### ⭐️ Features
+## ⭐️ Features
 - Fetch repo meta-data: branches, tags, and PRs
 - Serve repo and Gist files
 - Instant access to new changes pushed to Github *
