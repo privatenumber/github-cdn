@@ -15,6 +15,10 @@
 			"dest": "/api/get-ratelimit"
 		},
 		{
+			"src": "/gist/([^/]+)(?:/([^/]*)/?)?",
+			"dest": "/api/get-gist?gistId=$1&path=$2"
+		},
+		{
 			"src": "/([^/]+)(?:/([^/]*)/?)?",
 			"dest": "/api/get-repo?owner=$1&repo=$2"
 		},
