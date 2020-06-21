@@ -2,11 +2,12 @@
 
 [Github CDN](https://github-cdn.now.sh) is [UNPKG](https://unpkg.com/) for Github — an unofficial content delivery network for repo assets on Github.
 
-Designed to provide:
-- an endpoint to retrieve branches/tags/PRs of a repo
-- an easy way to serve dev code before publishing them
-- access to [npm excluded files](https://docs.npmjs.com/using-npm/developers.html#keeping-files-out-of-your-package)
-- immediate (micro-cached) access to new changes pushed to Github *
+#### ⭐️ Features
+- Fetch repo meta-data: branches, tags, and PRs
+- Serve repo and Gist files
+- Instant access to new changes pushed to Github *
+- Great for quick prototyping / development
+- Includes [npm excluded files](https://docs.npmjs.com/using-npm/developers.html#keeping-files-out-of-your-package)
 - [Node API](https://github.com/privatenumber/github-cdn/blob/master/readme_node-api.md) for compatibility with Github Enterprise
 
 _* Unless the request fails due to network failure or rate-limiting_
