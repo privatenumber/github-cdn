@@ -1,5 +1,5 @@
 const log = require('../lib/utils/log');
-const getRemoteInfo = require('../lib/github.get-remote-info');
+const getRemoteInfo = require('../lib/github/get-remote-info');
 const config = require('../lib/utils/config');
 const route = require('../lib/utils/route');
 

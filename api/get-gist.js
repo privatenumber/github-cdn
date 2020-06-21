@@ -1,7 +1,7 @@
 const mime = require('mime');
 const log = require('../lib/utils/log');
 const route = require('../lib/utils/route');
-const getGist = require('../lib/github.get-gist');
+const getGist = require('../lib/github/get-gist');
 
 module.exports = route(async (req, res) => {
 	log('[req:get-gist]', req.url);
