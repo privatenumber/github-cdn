@@ -6,6 +6,7 @@ const route = require('../lib/utils/route');
 module.exports = route(async (req, res) => {
 	log('[req:get-ratelimit]', req.url);
 
+	// TODO: support query.token
 	const token = req.cookies.token || github.token;
 
 	const opts = token ? { headers: { Authorization: `token ${token}` } } : undefined;
