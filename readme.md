@@ -47,6 +47,14 @@ _* Unless the request fails due to network failure or rate-limiting_
   - eg. [`/vuejs/vue/v2.6.11/dist/`](https://github-cdn.now.sh/vuejs/vue/v2.6.11/dist/)
   - eg. [`/vuejs/vue/v2.6.11/dist/vue.min.js`](https://github-cdn.now.sh/vuejs/vue/v2.6.11/dist/vue.min.js)
 
+- `/gist/:gist-id`
+  - Get meta-data on a Gist: url, owner, created/updated date, and files
+  - eg. [`/gist/feff40b0a522f0c41c4eff0b77ea1d47`](https://github-cdn.now.sh/gist/feff40b0a522f0c41c4eff0b77ea1d47)
+
+- `/gist/:gist-id/:path`
+  - Get a file from a Gist
+  - eg. [`/gist/feff40b0a522f0c41c4eff0b77ea1d47/tulip.jpg`](https://github-cdn.now.sh/gist/feff40b0a522f0c41c4eff0b77ea1d47/tulip.jpg)
+
 - `/ratelimit`
   - See the rate limit quota available on the Github API
   - With rate limiting, **Github CDN is not a production-ready solution** to hosting code
