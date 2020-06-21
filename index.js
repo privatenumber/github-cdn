@@ -3,6 +3,7 @@ const serveLanding = require('./api/serve-landing');
 const getRatelimit = require('./api/get-ratelimit');
 const getRepo = require('./api/get-repo');
 const getPath = require('./api/get-path');
+const getGist = require('./api/get-gist');
 
 function githubCdnRouter() {
 	const router = Router();
@@ -15,6 +16,7 @@ function githubCdnRouter() {
 	});
 
 	router.get('/ratelimit', getRatelimit);
+	router.get('/gist/:gistId?/:path?', getGist);
 	router.get('/:owner/:repo?', getRepo);
 	router.get('/:owner/:repo/:ref?:path(/*)?', getPath);
 
