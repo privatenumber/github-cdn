@@ -12,10 +12,14 @@
   ],
   "author": "Hiroki Osame <hiroki.osame@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/privatenumber/github-cdn.git"
+  },
   "bugs": {
     "url": "https://github.com/privatenumber/github-cdn/issues"
   },
-  "homepage": "https://github.com/privatenumber/github-cdn#readme",
+  "homepage": "https://github-cdn.now.sh",
   "files": [
     "lib",
     "api",
