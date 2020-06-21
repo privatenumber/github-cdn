@@ -48,5 +48,5 @@ The configuration file is detected and read using [cosmicconfig](https://github.
 - `whitelist` (`Array<Object>`) - Only allow access to specific repos
   - `owner` (`String`) - Owner of the repo to whitelist
   - `repo` (`String`) - Name of the repo to whitelist
-  - `gists` (`Boolean`) - Whether the owner's `gists` are accessible
+  - `gists` (`Boolean`) - Whether the owner's Gists are accessible
 
