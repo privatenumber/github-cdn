@@ -1,20 +1,13 @@
 const config = require('../lib/utils/config');
 const log = require('../lib/utils/log');
 
-
-const markdownCss = 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css';
-const jsAssets = [
-	'https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js',
-	'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
-];
-
 const assets = {
 	js: [
 		'https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js',
 		'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
 	],
 	css: [
-		'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css'
+		'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css',
 	],
 };
 
@@ -27,11 +20,9 @@ const landingTpl = `
 	<meta name="keywords" content="Github, CDN">
 	<meta name="author" content="Hiroki Osame">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	${
-		`<link rel="preload" href="${config.landingPageMdSrc}" as="fetch">`
-		+ assets.css.map(s => `<link rel="preload" href="${s}" as="style">`).join('')
-		+ assets.js.map(s => `<link rel="preload" href="${s}" as="script">`).join('')
-	}
+	<link rel="preload" href="${config.landingPageMdSrc}" as="fetch">
+	${assets.css.map((s) => `<link rel="preload" href="${s}" as="style">`).join('')}
+	${assets.js.map((s) => `<link rel="preload" href="${s}" as="script">`).join('')}
 	<style>
 	body { margin: 0; }
 	.markdown-body {
@@ -49,13 +40,13 @@ const landingTpl = `
 	}
 	</style>
 	${
-		assets.css.map(s => `<link rel="stylesheet" href="${s}">`).join('')
+		assets.css.map((s) => `<link rel="stylesheet" href="${s}">`).join('')
 	}
 </head>
 <body>
 	<div id="md" class="markdown-body">Loading...</div>
 	${
-		assets.js.map(s => `<script src="${s}" defer></script>`).join('')
+		assets.js.map((s) => `<script src="${s}" defer></script>`).join('')
 	}
 	<script type="text/javascript">
 	fetch('${config.landingPageMdSrc}')
@@ -81,8 +72,9 @@ const landingTpl = `
 
 			$input.addEventListener('keyup', (e) => (e.key === 'Enter') && $input.blur());
 			$input.addEventListener('change', () => {
-				const { value } = $input;
+				const value = $input.value.trim();
 				if (!value) {
+					$input.value = '';
 					Cookies.remove('token');
 				} else {
 					Cookies.set('token', value, { sameSite: 'none' });
