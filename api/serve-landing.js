@@ -31,6 +31,9 @@ const landingTpl = `
 		width: 70vw;
 		margin: 32px auto;
 	}
+	input:not(:focus):invalid {
+		outline: red auto 1px;
+	}
 	.success {
 		opacity: 0;
 		transition: .2s ease-in opacity;
@@ -39,15 +42,11 @@ const landingTpl = `
 		opacity: 1;
 	}
 	</style>
-	${
-		assets.css.map((s) => `<link rel="stylesheet" href="${s}">`).join('')
-	}
+	${assets.css.map((s) => `<link rel="stylesheet" href="${s}">`).join('')}
 </head>
 <body>
 	<div id="md" class="markdown-body">Loading...</div>
-	${
-		assets.js.map((s) => `<script src="${s}" defer></script>`).join('')
-	}
+	${assets.js.map((s) => `<script src="${s}" defer></script>`).join('')}
 	<script type="text/javascript">
 	fetch('${config.landingPageMdSrc}')
 		.then(r => r.text())
@@ -68,10 +67,15 @@ const landingTpl = `
 				style: 'width: 90%;',
 				placeholder: 'eg. 8c75f49d8ae8f4482a7ae6ed23452f4837f61653',
 				value: Cookies.get('token') || '',
+				pattern: '[a-f0-9]{40}',
+				maxLength: 40,
 			});
 
 			$input.addEventListener('keyup', (e) => (e.key === 'Enter') && $input.blur());
 			$input.addEventListener('change', () => {
+				if (!$input.validity.valid) {
+					return;
+				}
 				const value = $input.value.trim();
 				if (!value) {
 					$input.value = '';
