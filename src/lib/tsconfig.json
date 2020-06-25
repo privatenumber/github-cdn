@@ -28,8 +28,7 @@
 
     "pretty": true,
   },
-  "references": [
-    { "path": "api/tsconfig.json" },
-    { "path": "lib/tsconfig.json" },
+  "include": [
+    "./*.ts",
   ],
 }
