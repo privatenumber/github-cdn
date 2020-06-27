@@ -29,7 +29,7 @@
     "pretty": true,
   },
   "references": [
-    { "path": "api/tsconfig.json" },
-    { "path": "lib/tsconfig.json" },
-  ],
+    { "path": "./api" },
+    { "path": "./lib" },
+  ]
 }

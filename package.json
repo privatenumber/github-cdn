@@ -27,7 +27,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p src",
+    "build": "rm -rf api && rm -rf lib && tsc -b --verbose src",
     "dev": "cd dev-server && DEBUG=github-cdn nodemon . --watch ..",
     "lint": "eslint ."
   },
@@ -50,7 +50,8 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "express": "^4.17.1",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "typescript": "^3.9.5"
   },
   "engines": {
     "node": "^12.14.0",

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "outDir": "../../api/",
+
     "target": "es2017",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -29,6 +31,9 @@
     "pretty": true,
   },
   "include": [
-    "./*.ts",
-  ]
+    "./"
+  ],
+  "exclude": [
+    "../../api/"
+  ],
 }
