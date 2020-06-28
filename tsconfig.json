@@ -29,7 +29,7 @@
     "pretty": true,
   },
   "references": [
-    { "path": "./api" },
-    { "path": "./lib" },
+    { "path": "./src/api" },
+    { "path": "./src/lib" },
   ]
 }

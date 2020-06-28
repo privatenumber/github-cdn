@@ -27,7 +27,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf api && rm -rf lib && tsc -b --verbose src",
+    "build": "rm -rf api && rm -rf lib && tsc -b --verbose",
     "dev": "cd dev-server && DEBUG=github-cdn nodemon . --watch ..",
     "lint": "eslint ."
   },
