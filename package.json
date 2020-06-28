@@ -27,6 +27,7 @@
   ],
   "main": "index.js",
   "scripts": {
+    "build": "rm -rf api && rm -rf lib && tsc --build --verbose ",
     "dev": "cd dev-server && DEBUG=github-cdn nodemon . --watch ..",
     "lint": "eslint .",
     "version": "standard-version --preset angular"
@@ -51,7 +52,8 @@
     "eslint-plugin-import": "^2.20.2",
     "express": "^4.17.1",
     "nodemon": "^2.0.3",
-    "standard-version": "^8.0.0"
+    "standard-version": "^8.0.0",
+    "typescript": "^3.9.5"
   },
   "engines": {
     "node": "^12.14.0",
