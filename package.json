@@ -30,7 +30,8 @@
     "dev": "cd dev-server && DEBUG=github-cdn nodemon . --watch ..",
     "lint": "eslint .",
     "version": "standard-version --preset angular",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "build:watch": "npm run build -- -w"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
