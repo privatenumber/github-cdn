@@ -3,7 +3,7 @@ const log = require('../lib/utils/log');
 
 const assets = {
 	js: [
-		'https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js',
+		'https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js',
 		'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
 	],
 	css: [
@@ -81,7 +81,7 @@ const landingTpl = `
 					$input.value = '';
 					Cookies.remove('token');
 				} else {
-					Cookies.set('token', value, { sameSite: 'none' });
+					Cookies.set('token', value, { sameSite: 'none', secure: true });
 				}
 				$success.classList.add('visible');
 				setTimeout(() => $success.classList.remove('visible'), 1000);
