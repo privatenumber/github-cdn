@@ -51,7 +51,7 @@ const landingTpl = `
 	fetch('${config.landingPageMdSrc}')
 		.then(r => r.text())
 		.then(mdStr => {
-			md.innerHTML = marked(mdStr);
+			md.innerHTML = marked.parse(mdStr);
 
 			const firstHeading = document.querySelector('h1');
 			document.title = firstHeading.innerText;
